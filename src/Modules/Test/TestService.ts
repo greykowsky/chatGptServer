@@ -1,49 +1,52 @@
-// ./src/Modules/Test/TestService.ts
-
 import { TestModel } from './TestModel';
 
 export class TestService {
-  public async createTest(test1: number, test2: string): Promise<TestModel> {
-    const test = await TestModel.create({
-      test1,
-      test2
-    });
-
-    return test;
+  public async createTest(data: { test1: number; test2: string }): Promise<TestModel> {
+    try {
+      const test = await TestModel.create(data);
+      return test;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
-  public async getTestById(id: number): Promise<TestModel | null> {
-    const test = await TestModel.findByPk(id);
-
-    return test;
+  public async getTestById(id: string): Promise<TestModel> {
+    try {
+      const test = await TestModel.findOne({ where: { id } });
+      if (!test) {
+        throw new Error('Test not found');
+      }
+      return test;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
   public async getAllTests(): Promise<TestModel[]> {
-    const tests = await TestModel.findAll();
-
-    return tests;
+    try {
+      const tests = await TestModel.findAll();
+      return tests;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
-  public async updateTestById(id: number, test1: number, test2: string): Promise<boolean> {
-    const result = await TestModel.update({
-      test1,
-      test2
-    }, {
-      where: {
-        id
-      }
-    });
-
-    return result[0] > 0;
+  public async updateTest(id: string, data: { test1: number; test2: string }): Promise<TestModel> {
+    try {
+      const test = await this.getTestById(id);
+      await test.update(data);
+      return test;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
-  public async deleteTestById(id: number): Promise<boolean> {
-    const result = await TestModel.destroy({
-      where: {
-        id
-      }
-    });
-
-    return result > 0;
+  public async deleteTest(id: string): Promise<void> {
+    try {
+      const test = await this.getTestById(id);
+      await test.destroy();
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 }

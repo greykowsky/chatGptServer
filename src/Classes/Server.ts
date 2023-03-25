@@ -3,7 +3,7 @@
 import express, { Application } from 'express';
 import http from 'http';
 import { Server as SocketIOServer, Socket } from 'socket.io';
-import { TestComponent } from '../Modules/Test/TestComponent';
+import { TestController } from '../Modules/Test/TestController';
 import { TestGateway } from '../Modules/Test/TestGateway';
 import { config } from '../config/config';
 import { sequelize } from '../config/db';
@@ -35,7 +35,7 @@ export class Server {
   }
 
   public registerRoutes(): void {
-    this.app.use('/test', new TestComponent().router);
+    this.app.use('/test', new TestController().router);
   }
 
 }
