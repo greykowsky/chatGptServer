@@ -7,11 +7,14 @@
     "outDir": "dist",
     "strict": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "sourceMap": true
   },
+
   "include": [
     "./src/index.ts",
     "./src/Classes/**/*.ts",
+    "./src/Modules/**/*.ts",
     "./src/Helpers/**/*.ts"
   ],
   "exclude": [

@@ -3,6 +3,8 @@
 import express, { Application } from 'express';
 import http from 'http';
 import { Server as SocketIOServer, Socket } from 'socket.io';
+import { TestComponent } from '../Modules/Test/TestComponent';
+import { TestGateway } from '../Modules/Test/TestGateway';
 import { config } from '../config/config';
 import { sequelize } from '../config/db';
 
@@ -26,14 +28,14 @@ export class Server {
 
   public registerSocketHandlers(): void {
     this.io.on('connection', (socket: Socket) => {
+      new TestGateway(socket)
       console.log(`Socket ${socket.id} connected`);
       // Обработчики событий Socket.IO
     });
   }
 
   public registerRoutes(): void {
-    this.app.get('/', (req, res) => {
-      res.send('Hello, World!');
-    });
+    this.app.use('/test', new TestComponent().router);
   }
+
 }
