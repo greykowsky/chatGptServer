@@ -8,13 +8,13 @@ export class TestModel extends Model {
     primaryKey: true,
     autoIncrement: true,
   })
-  id: number;
+  id!: number;
 
   @Column({
     type: 'integer',
     allowNull: false,
   })
-  test1: number;
+  test1!: number;
 
   @Column({
     type: 'string',
@@ -23,5 +23,5 @@ export class TestModel extends Model {
       len: [0, 250],
     },
   })
-  test2: string;
+  test2!: string;
 }
